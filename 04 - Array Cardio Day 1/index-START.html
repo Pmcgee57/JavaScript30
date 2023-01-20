@@ -37,28 +37,83 @@
     
     // Array.prototype.filter()
     // 1. Filter the list of inventors for those who were born in the 1500's
+    const fifteen = inventors.filter(inventors => (inventors.year >= 1500 && inventors.year <= 1600));
+    console.table(fifteen);
+    
 
-    // Array.prototype.map()
+    // Array.prototype.map() -- returns that same amount of items as it is given
     // 2. Give us an array of the inventors first and last names
+    const fullNames = inventors.map(inventor => inventor.first + ' ' + inventor.last);
+    console.log(fullNames);
 
-    // Array.prototype.sort()
+
+    // Array.prototype.sort() 
     // 3. Sort the inventors by birthdate, oldest to youngest
+    // ? is a ternary operator, essentially a boiled down if statement
+    const ordered = inventors.sort((a, b) => a.year > b.year ? 1 : -1);
 
-    // Array.prototype.reduce()
+    console.table(ordered);
+
+    //const ordered = inventors.sort(function(a, b){
+      //if(a.year > b.year) {
+      //  return 1;
+      //} else {
+      //  return -1;
+      //}
+    //})
+
+
+    
+    // Array.prototype.reduce() --  reduce allows you to build something on each item
     // 4. How many years did all the inventors live all together?
+        const totalYears = inventors.reduce((total, inventor) => {
+          return total + (inventor.passed - inventor.year);
+        }, 0);
+
+        console.log(totalYears);
 
     // 5. Sort the inventors by years lived
+        const oldest = inventors.sort(function(a, b) {
+          const lastGuy = a.passed - a.year;
+          const nextGuy = b.passed - b.year;
+          return lastGuy > nextGuy ? -1 : 1;
+        });
 
+        console.table(oldest);
+    
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
 
+//      const category = document.querySelector('.mw-category'); // get elements from the DOM on the webpage
+//      const links = Array.from(category.querySelectorAll('a')); // get all links in that element into a list, then convert list to an array
+
+//      const de = links
+//       .map(link => link.textContent) // convert links list to an array list of names
+//        .filter(streetName => streetName.includes('de'));//filter list of names 
 
     // 7. sort Exercise
     // Sort the people alphabetically by last name
+    const alpha = people.sort((lastOne, nextOne) => {
+      const [aLast, aFirst] = lastOne.split(', ');
+      const [bLast, bFirst] = nextOne.split(', ');
+      return aLast > bLast ? 1 : -1;
+    });
+
+    console.log(alpha);
 
     // 8. Reduce Exercise
     // Sum up the instances of each of these
     const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
+
+    const transportation = data.reduce(function(obj, item) {
+      if(!obj[item]) {
+        obj[item] = 0;
+      }
+      obj[item]++;
+      return obj;
+    }, {}); // start with a blank object, then everytime we loop over one first we check if there is a zero there. If not, we make an entry for that.
+
+    console.log(transportation);
 
   </script>
 </body>
